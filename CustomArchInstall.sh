@@ -221,11 +221,17 @@ else
 
 	if [[ $answerUTILS = "yes" ]]; then
 		#PERSONAL BLOAT SETUP
-		pacman -Syu --noconfirm urxvt aircrack-ng amarok btrfs-progs calibre chromium dnsmasq dosfstools ebtables fcron fdupes file-roller gedit gnome-calculator gnome-disk-utility gnome-keyring gnome-terminal gparted iotop jre8-openjdk kdeconnect keepassxc krita lib32-mpg123 libreoffice-fresh nautilus nfs-utils nmon nomacs ntfs-3g obs-studio ovmf pavucontrol python2-nautilus python-pip qbittorrent qemu redshift rfkill riot-desktop smartmontools smplayer spectacle sshfs steam steam-native-runtime ttf-hack ttf-liberation virt-manager wine_gecko wireshark-qt wol xterm youtube-dl
+		pacman -Syu --noconfirm lightdm urxvt aircrack-ng amarok btrfs-progs calibre chromium dnsmasq dosfstools ebtables fcron fdupes file-roller gedit gnome-calculator gnome-disk-utility gnome-keyring gnome-terminal gparted iotop jre8-openjdk kdeconnect keepassxc krita lib32-mpg123 libreoffice-fresh nautilus nfs-utils nmon nomacs ntfs-3g obs-studio ovmf pavucontrol python2-nautilus python-pip qbittorrent qemu redshift rfkill riot-desktop smartmontools smplayer spectacle sshfs steam steam-native-runtime ttf-hack ttf-liberation virt-manager wine_gecko wireshark-qt wol xterm youtube-dl
     systemctl enable fcron
+    
 		#Setup virtualization
 		usermod -G libvirt $username
 		systemctl enable libvirtd
+		
+		#Setup Lightdm
+		systemctl enable lightdm.service
+		pacaur -S lightdm-unity-greeter --noconfirm
+		
 		#Setup UEFI virtualization
 		echo "nvram = [" >> /etc/libvirt/qemu.conf 
 		echo "\/usr/share/ovmf/ovmf_code_x64.bin:/usr/share/ovmf/ovmf_vars_x64.bin\"" >> /etc/libvirt/qemu.conf 

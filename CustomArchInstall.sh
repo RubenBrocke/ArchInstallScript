@@ -202,9 +202,7 @@ else
 
 	if [[ $answerDE = "yes" ]]; then
 		pacman -Syu xorg xorg-xinit networkmanager --noconfirm
-    pacaur -Syu i3-gaps-next-git --noconfirm 
-
-		echo "exec cinnamon-session" > /home/$username/.xinitrc
+    		pacaur -Syu i3-gaps-next-git --noconfirm 
 		#systemctl enable gdm #TODO add some DM
 		systemctl enable NetworkManager
 	fi

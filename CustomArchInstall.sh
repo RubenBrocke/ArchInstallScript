@@ -200,7 +200,11 @@ else
 	sed -i s/root/"home\/$username"/g /home/$username/.zshrc
   	git clone https://github.com/yarisgutierrez/classyTouch_oh-my-zsh.git /home/$username/.oh-my-zsh/themes
   
-	  # Install pacaur dependencies from arch repos
+	# Create a tmp-working-dir and navigate into it
+	mkdir -p /tmp/pacaur_install
+	cd /tmp/pacaur_install
+  
+	# Install pacaur dependencies from arch repos
 	sudo pacman -S expac yajl git --noconfirm --needed
 
 	# Install "cower" from AUR
@@ -238,16 +242,12 @@ else
 
 	if [[ $answerUTILS = "yes" ]]; then
 		#PERSONAL BLOAT SETUP
-		pacman -Syu --noconfirm lightdm urxvt aircrack-ng amarok btrfs-progs calibre chromium dnsmasq dosfstools ebtables fcron fdupes file-roller gedit gnome-calculator gnome-disk-utility gnome-keyring gnome-terminal gparted iotop jre8-openjdk kdeconnect keepassxc krita lib32-mpg123 libreoffice-fresh nautilus nfs-utils nmon nomacs ntfs-3g obs-studio ovmf pavucontrol python2-nautilus python-pip qbittorrent qemu redshift rfkill riot-desktop smartmontools smplayer spectacle sshfs steam steam-native-runtime ttf-hack ttf-liberation virt-manager wine_gecko wireshark-qt wol xterm youtube-dl
+		pacman -Syu --noconfirm urxvt aircrack-ng amarok btrfs-progs calibre chromium dnsmasq dosfstools ebtables fcron fdupes file-roller gedit gnome-calculator gnome-disk-utility gnome-keyring gnome-terminal gparted iotop jre8-openjdk kdeconnect keepassxc krita lib32-mpg123 libreoffice-fresh nautilus nfs-utils nmon nomacs ntfs-3g obs-studio ovmf pavucontrol python2-nautilus python-pip qbittorrent qemu redshift rfkill riot-desktop smartmontools smplayer spectacle sshfs steam steam-native-runtime ttf-hack ttf-liberation virt-manager wine_gecko wireshark-qt wol xterm youtube-dl
     systemctl enable fcron
     
 		#Setup virtualization
 		usermod -G libvirt $username
-		systemctl enable libvirtd
-		
-		#Setup Lightdm
-		systemctl enable lightdm
-		pacaur -S lightdm-unity-greeter --noconfirm
+		systemctl enable libvirtd		
 		
 		#Setup UEFI virtualization
 		echo "nvram = [" >> /etc/libvirt/qemu.conf 
@@ -258,7 +258,8 @@ else
 		echo "#!/bin/bash" > /home/$username/archfinish.sh
 		#enable NTP time syncing
 		echo "timedatectl set-ntp true" >> /home/$username/archfinish.sh
-		echo "pacaur -Syu polybar-git angrysearch charles mumble-git nextcloud-client pamac-aur qdirstat reaver-wps-fork-t6x-git rpcs3-git sc-controller visual-studio-code-git zsh-autosuggestions --noconfirm --noedit" >> /home/$username/archfinish.sh
+		echo "pacaur -Syu urxvt lightdm lightdm-unity-greeter i3-gaps-next-git polybar-git angrysearch charles mumble-git nextcloud-client pamac-aur qdirstat reaver-wps-fork-t6x-git rpcs3-git sc-controller visual-studio-code-git zsh-autosuggestions --noconfirm --noedit" >> /home/$username/archfinish.sh
+		echo "systemctl enable lightdm.service" >> /home/$username/archfinish.sh
 		chmod +x /home/$username/archfinish.sh
 	fi
 	exit

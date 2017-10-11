@@ -198,7 +198,26 @@ else
 	chown $username:$username /home/$username/.oh-my-zsh
 	chown $username:$username /home/$username/.zshrc
 	sed -i s/root/"home\/$username"/g /home/$username/.zshrc
-  git clone https://github.com/yarisgutierrez/classyTouch_oh-my-zsh.git /home/$username/.oh-my-zsh/themes
+  	git clone https://github.com/yarisgutierrez/classyTouch_oh-my-zsh.git /home/$username/.oh-my-zsh/themes
+  
+	  # Install pacaur dependencies from arch repos
+	sudo pacman -S expac yajl git --noconfirm --needed
+
+	# Install "cower" from AUR
+	if [ ! -n "$(pacman -Qs cower)" ]; then
+	    curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower
+	    makepkg PKGBUILD --skippgpcheck --install --needed
+	fi
+
+	# Install "pacaur" from AUR
+	if [ ! -n "$(pacman -Qs pacaur)" ]; then
+	    curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pacaur
+	    makepkg PKGBUILD --install --needed
+	fi
+
+	# Clean up...
+	cd ~
+	rm -r /tmp/pacaur_install
 
 	if [[ $answerDE = "yes" ]]; then
 		pacman -Syu xorg xorg-xinit networkmanager --noconfirm

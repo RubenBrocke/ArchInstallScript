@@ -246,7 +246,7 @@ else
 		systemctl enable libvirtd
 		
 		#Setup Lightdm
-		systemctl enable lightdm.service
+		systemctl enable lightdm
 		pacaur -S lightdm-unity-greeter --noconfirm
 		
 		#Setup UEFI virtualization
